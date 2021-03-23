@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"bytes"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -75,6 +76,18 @@ func readFromReader(r *zip.Reader, fullJar bool) (*JarInfo, error) {
 	for _, f := range r.File {
 		if fullJar {
 			jar.Files = append(jar.Files, f.Name)
+			if strings.HasSuffix(f.Name, ".jar") || strings.HasSuffix(f.Name, ".war") || strings.HasSuffix(f.Name, ".hpi") {
+				rf, _ := f.Open()
+				body, _ := ioutil.ReadAll(rf)
+				zr, err := zip.NewReader(bytes.NewReader(body), f.FileInfo().Size())
+				// pretty much ignore errors
+				if err == nil {
+					rJar, err := readFromReader(zr, true)
+					if err != nil {
+						jar.Files = append(jar.Files, rJar.Files...)
+					}
+				}
+			}
 		}
 		if f.Name == MANIFEST_FULL_NAME {
 			rc, err := f.Open()
