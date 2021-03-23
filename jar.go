@@ -83,7 +83,7 @@ func readFromReader(r *zip.Reader, fullJar bool) (*JarInfo, error) {
 				// pretty much ignore errors
 				if err == nil {
 					rJar, err := readFromReader(zr, true)
-					if err != nil {
+					if err == nil {
 						jar.Files = append(jar.Files, rJar.Files...)
 					}
 				}
