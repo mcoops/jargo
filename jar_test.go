@@ -24,7 +24,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestValidJarFile_JarInfo(t *testing.T) {
-	_, err := readFromReader(getReader(), true)
+	_, err := readFromReader(getReader(), true, "")
 	if err != nil {
 		t.FailNow()
 	}
@@ -39,7 +39,7 @@ func TestMissingJarFile_JarInfo(t *testing.T) {
 }
 
 func TestValidJarFile_JarManifest(t *testing.T) {
-	manifest, err := readFromReader(getReader(), false)
+	manifest, err := readFromReader(getReader(), false, "")
 	if err != nil {
 		log.Println(err)
 		t.FailNow()
