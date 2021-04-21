@@ -71,7 +71,7 @@ func GetJarInfo(filename string) (*JarInfo, error) {
 	jar, err := readFromFile(filename, true)
 
 	if err != nil {
-		return nil, errors.New("Errror processing " + filename + " " + err.Error())
+		return nil, errors.New("Error processing " + filename + " " + err.Error())
 	}
 
 	first := jar.Files[0]
