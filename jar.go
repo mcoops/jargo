@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/xml"
+	"errors"
 	"io"
 	"io/ioutil"
 	"log"
@@ -68,6 +69,10 @@ func GetManifest(filename string) (*Manifest, error) {
 // It returns a pointer to a JarInfo struct
 func GetJarInfo(filename string) (*JarInfo, error) {
 	jar, err := readFromFile(filename, true)
+
+	if err != nil {
+		return nil, errors.New("Errror processing " + filename + " " + err.Error())
+	}
 
 	first := jar.Files[0]
 	// not great, but given it's recursive we're generally going to get the top level jar accidentally.

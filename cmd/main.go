@@ -22,6 +22,7 @@ func main() {
 
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 	for _, f := range jar.Files {
 		fmt.Println(f)
