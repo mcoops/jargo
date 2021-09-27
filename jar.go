@@ -249,8 +249,9 @@ func makeManifestMap(lines []string) *Manifest {
 
 	for _, line := range lines {
 		i := strings.Index(line, ":")
-		if i == -1 {
-			log.Println("Not properties file?? This line missing colon (:): " + line)
+		if i == -1 || i == 0 {
+			// log.Println("Not properties file?? This line missing colon (:): " + line)
+			continue
 		}
 		key := strings.TrimSpace(line[0:i])
 		value := strings.TrimSpace(line[i+1:])
